@@ -7,48 +7,30 @@ class Solution:
           
     def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
         
-        r = ListNode()
-        p = r
+        res = ListNode()
+        p = res
               
         if list1 == None and list2 == None:
-
             return None
     
-        while list1 != None or list2 != None:
+        while list1 and list2:
+            if list1.val <= list2.val:
+                p.next = list1
+                p = list1
+                list1 = list1.next
             
-            if list1 == None:
-                
-                p.val = list2.val
-                if list2.next != None:
-                    p.next = ListNode()
-                    p = p.next
-                    
-                list2 = list2.next
-                
-            elif list2 == None:
-                
-                p.val = list1.val
-                if list1.next != None:
-                    p.next = ListNode()
-                    p = p.next
-                    
-                list1 = list1.next
-           
-            elif list1.val <= list2.val:
-                
-                p.val = list1.val
-                p.next = ListNode()
-                p = p.next
-                list1 = list1.next
-                
             else:
-                
-                p.val = list2.val
-                p.next = ListNode()
-                p = p.next
+                p.next = list2
+                p = list2
                 list2 = list2.next
                 
-        return r
+        if list1:               #list1 remains
+            p.next = list1
+        
+        else:
+            p.next = list2      #list2 remains
+                   
+        return res.next
             
         
         
